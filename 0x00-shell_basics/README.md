@@ -8,3 +8,4 @@ Create a script that creates a directory named my_first_directory in the /tmp/ d
 move file
 remove file
 remove directory
+change directory to previous one
