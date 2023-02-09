@@ -5,3 +5,4 @@ change ownership of a file
 creates an empty file
 grants execute permision to owner
 multiple permissions
+adds executing permission to everyone
