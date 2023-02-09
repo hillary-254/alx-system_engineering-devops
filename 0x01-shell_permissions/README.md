@@ -8,3 +8,4 @@ multiple permissions
 adds executing permission to everyone
 removes permission to owners and group owners
 change permissions
+mirror permissions
