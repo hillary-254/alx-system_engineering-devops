@@ -12,3 +12,4 @@ mirror permissions
 adds execute permission to all subdirectories of the current directory
 create and assign permission to a directory
 change ownership
+change ownership and group ownership
