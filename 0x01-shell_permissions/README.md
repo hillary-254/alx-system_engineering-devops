@@ -10,3 +10,4 @@ removes permission to owners and group owners
 change permissions
 mirror permissions
 adds execute permission to all subdirectories of the current directory
+create and assign permission to a directory
