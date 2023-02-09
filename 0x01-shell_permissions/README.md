@@ -14,3 +14,4 @@ create and assign permission to a directory
 change ownership
 change ownership and group ownership
 owner and group owner
+changes ownership if it is owned by specified user
