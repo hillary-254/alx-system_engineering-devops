@@ -17,3 +17,4 @@ Display lines containing the pattern “root” and 3 lines after them
 Display all the lines in the file /etc/passwd that do not contain the pattern “bin”.
 Replace all characters A and c from input to Z and e respectively
 script that reverse its input.
+displays all users and their home directories, sorted by users
