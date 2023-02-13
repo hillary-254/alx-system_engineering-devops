@@ -5,3 +5,4 @@ combine the display of two files
 displays the last 10 lines of a file
 display the first 10 lines of a file
 read a specific line without using ced command
+creates a file with special characters and append a text
