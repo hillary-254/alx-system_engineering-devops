@@ -9,3 +9,4 @@ creates a file with special characters and append a text
 copy ls -la results to a file
 duplicate the last line of the file
 counts the number of directories and sub-directories in the current directory
+sorts 10 newest lines
