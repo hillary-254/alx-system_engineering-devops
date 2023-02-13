@@ -13,3 +13,4 @@ sorts 10 newest lines
 akes a list of words as input and prints only words that appear exactly once
 searches the pattern root
 Display the number of lines that contain the pattern
+Display lines containing the pattern “root” and 3 lines after them
