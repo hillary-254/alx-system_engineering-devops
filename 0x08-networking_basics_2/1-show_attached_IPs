@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Get all active IPv4 addresses and filters out the loopback address (127.0.0.1)
+active_ips=$(ip addr show | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}')
+
+# Display the active IPv4 addresses
+echo "$active_ips"
