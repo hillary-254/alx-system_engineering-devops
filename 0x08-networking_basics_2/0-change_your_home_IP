@@ -4,13 +4,27 @@
 # (To be run in a Docker container; else revert host file back)
 
 HOST_FILE="/etc/hosts"
-TEMP_FILE=$(mktemp)
+HOST_COPY="temp_host"
+HOST_BAK="bak_host"
+WILD_CARD="127*.*localhost"
 LOCAL_HOST="127.0.0.2	localhost"
 FACEBOOK="8.8.8.8	facebook.com"
 
-# Change localhost and facebook.com entries in the temporary file
-sed "/127\.0\.0\.1/ s/.*/$LOCAL_HOST/" "$HOST_FILE" > "$TEMP_FILE"
-sed "/facebook\.com/ s/.*/$FACEBOOK/" "$TEMP_FILE" > "$HOST_FILE"
+#create temporary hostfile
+cp "${HOST_FILE}" "${HOST_COPY}"
+cp "${HOST_FILE}" "${HOST_BAK}"
 
-# Clean up temporary file
-rm "$TEMP_FILE"
+# Find and replace all occurrences of localhost
+DONE=0
+
+cat -n "${HOST_FILE}" | grep "${WILD_CARD}" | sed 's/  \+ //' | cut -c 1-1 |
+while read -r i; do
+	sed -i "$((i+DONE))d" ${HOST_COPY}
+	sed -i "$((i+DONE))i ${LOCAL_HOST}" "${HOST_COPY}"
+
+	# Add facebook only once 
+	[[ $DONE -eq 0 ]] && sed -i "$((i+1))i ${FACEBOOK}" "${HOST_COPY}"
+	DONE=1
+done
+
+cp -f "${HOST_COPY}" "${HOST_FILE}"
