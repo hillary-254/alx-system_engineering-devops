@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Listen on port 98 on localhost
+echo "Starting my script."
+nc -l localhost 98
