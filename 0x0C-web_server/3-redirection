@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# This script configures Nginx for redirection.
+
+# Install Nginx if not already installed
+if ! dpkg -l | grep -q nginx; then
+    apt-get update
+    apt-get -y install nginx
+fi
+
+# Create a configuration file for the redirection
+echo "server {
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    location / {
+        # Your other server configurations go here
+    }
+}" > /etc/nginx/sites-available/redirect
+
+# Create a symbolic link to enable the configuration
+ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+
+# Remove default configuration (optional)
+rm /etc/nginx/sites-enabled/default
+
+# Restart Nginx to apply the changes
+kill -HUP $(cat /var/run/nginx.pid)
