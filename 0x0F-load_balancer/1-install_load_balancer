@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Update packages
+sudo apt update -y
+
+# Add HAProxy PPA
+sudo apt install -y software-properties-common
+sudo apt update -y
+
+# Install HAProxy
+sudo apt install -y haproxy
+
+# HAProxy configuration file path
+haproxy_conf_file="/etc/haproxy/haproxy.cfg"
+
+# Define the frontend and backend configurations
+frontend_config="frontend http
+    bind *:80
+    mode http
+    default_backend web-backend"
+
+backend_config="backend web-backend
+    balance roundrobin
+    server web-01 236784-web-01:80 check
+    server web-02 236784-web-02:80 check"
+
+# Append configurations to HAProxy config file
+echo -e "$frontend_config" | sudo tee -a $haproxy_conf_file
+echo -e "$backend_config" | sudo tee -a $haproxy_conf_file
+
+# Restart HAProxy
+sudo service haproxy restart
