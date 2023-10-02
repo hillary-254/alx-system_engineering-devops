@@ -14,19 +14,21 @@ sudo apt install -y haproxy
 haproxy_conf_file="/etc/haproxy/haproxy.cfg"
 
 # Define the frontend and backend configurations
-frontend_config="frontend http
-    bind *:80
-    mode http
-    default_backend web-backend"
+fname="frontend http"
+fbind="bind *:80"
+fmode="mode http"
+fdefault="default_backend web-backend"
+frontend_config="$fname\n\t$fbind\n\t$fmode\n\t$fdefault\n"
 
-backend_config="backend web-backend
-    balance roundrobin
-    server web-01 236784-web-01:80 check
-    server web-02 236784-web-02:80 check"
+bname="backend web-backend"
+bbalance="balance roundrobin"
+bserver1="server web-01 54.208.23.186:80 check"
+bserver2="server web-02 18.234.80.12:80 check"
+backend_config="$bname\n\t$bbalance\n\t$bserver1\n\t$bserver2"
 
 # Append configurations to HAProxy config file
-echo -e "$frontend_config" | sudo tee -a $haproxy_conf_file
-echo -e "$backend_config" | sudo tee -a $haproxy_conf_file
+sudo sed -i "$ a $frontend" $hgproxy_conf_file
+sudo sed -i "$ a $backend" $hgproxy_conf_file
 
 # Restart HAProxy
 sudo service haproxy restart
