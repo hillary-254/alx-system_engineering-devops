@@ -1,34 +1,21 @@
 #!/usr/bin/env bash
 
-# Update packages
-sudo apt update -y
-
-# Add HAProxy PPA
-sudo apt install -y software-properties-common
-sudo apt update -y
-
-# Install HAProxy
-sudo apt install -y haproxy
-
-# HAProxy configuration file path
-haproxy_conf_file="/etc/haproxy/haproxy.cfg"
-
 # Define the frontend and backend configurations
-fname="frontend http"
-fbind="bind *:80"
-fmode="mode http"
-fdefault="default_backend web-backend"
-frontend_config="$fname\n\t$fbind\n\t$fmode\n\t$fdefault\n"
-
-bname="backend web-backend"
-bbalance="balance roundrobin"
-bserver1="server web-01 54.208.23.186:80 check"
-bserver2="server web-02 18.234.80.12:80 check"
-backend_config="$bname\n\t$bbalance\n\t$bserver1\n\t$bserver2"
-
-# Append configurations to HAProxy config file
-sudo sed -i "$ a $frontend" $hgproxy_conf_file
-sudo sed -i "$ a $backend" $hgproxy_conf_file
-
-# Restart HAProxy
+CONFIG="
+frontend myfrontend
+    bind *:80
+    mode http
+    default_backend web_servers
+backend web_servers
+   balance roundrobin
+   server 236784-web-01 54.208.23.186:80 check
+   server 236784-web-02 18.234.80.12:80 check
+"
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.0
+sudo apt-get -y update
+sudo apt-get -y install haproxy=2.0.\*
+# Backup original config file before attempt modifications
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
+printf "%s" "$CONFIG" >> /etc/haproxy/haproxy.cfg
 sudo service haproxy restart
